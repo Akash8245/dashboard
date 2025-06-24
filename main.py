@@ -2,13 +2,18 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import gdown
+import os
 
 # Load data
 file_id = "1UYSiHKKxqwq2s5Tjtypnce3-tz6xqDlV"
 url = f"https://drive.google.com/uc?id={file_id}"
 output = "student_data.csv"
-gdown.download(url, output, quiet=False)
-df = pd.read_csv(output)
+
+if os.path.exists(output):
+    df = pd.read_csv(output)
+else:
+    gdown.download(url, output, quiet=False)
+    df = pd.read_csv(output)
 
 st.set_page_config(page_title="Student Quiz Dashboard", layout="wide")
 st.title("🎓 Umagine Student Impact Dashboard")
